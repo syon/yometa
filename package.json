@@ -1,0 +1,21 @@
+{
+  "name": "yometa",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "vue-full-screen-file-drop": "^1.0.0"
+  },
+  "devDependencies": {},
+  "author": "syon",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syon/yometa.git"
+  },
+  "bugs": {
+    "url": "https://github.com/syon/yometa/issues"
+  },
+  "homepage": "https://github.com/syon/yometa#readme"
+}
