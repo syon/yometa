@@ -5,6 +5,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "node-id3": "^0.1.5",
     "vue-full-screen-file-drop": "^1.0.0"
   },
   "devDependencies": {},

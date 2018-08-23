@@ -26,10 +26,14 @@
     </table>
 
     <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a>
+    <button @click="readFile">readFile</button>
+    <hr>
+    <pre>{{ output }}</pre>
   </div>
 </template>
 
 <script>
+import NodeID3 from "node-id3";
 import VueFullScreenFileDrop from "vue-full-screen-file-drop";
 import "vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css";
 
@@ -41,7 +45,8 @@ export default {
   },
   data: function() {
     return {
-      files: []
+      files: [],
+      output: "",
     };
   },
   methods: {
@@ -52,6 +57,17 @@ export default {
       Object.keys(files).forEach(x => {
         this.files.push(files[x]);
       });
+    },
+    readFile() {
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.addEventListener('load', () => { this.onFileLoad(reader) }, false);
+      reader.readAsArrayBuffer(file);
+    },
+    onFileLoad(reader) {
+      var buf = reader.result;
+      const tags = NodeID3.read(new Buffer(buf));
+      this.output = JSON.stringify(tags, null, 2);
     },
     handleDownload() {
       var file = this.files[0];
