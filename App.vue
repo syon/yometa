@@ -4,29 +4,34 @@
       <div>Some custom content</div>
     </VueFullScreenFileDrop>
 
-    <table>
-      <thead>
-        <tr>
-          <th>name</th>
-          <th>size</th>
-          <th>type</th>
-          <th>lastModified</th>
-          <th>lastModifiedDate</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(f, i) in files" :key="i">
-          <td>{{ f.name }}</td>
-          <td>{{ f.size }}</td>
-          <td>{{ f.type }}</td>
-          <td>{{ f.lastModified }}</td>
-          <td>{{ f.lastModifiedDate }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <template v-for="(f, i) in files">
+      <table :key="i">
+        <tbody>
+          <tr>
+            <th>name</th>
+            <td>{{ f.name }}</td>
+          </tr>
+          <tr>
+            <th>size</th>
+            <td>{{ f.size }}</td>
+          </tr>
+          <tr>
+            <th>type</th>
+            <td>{{ f.type }}</td>
+          </tr>
+          <tr>
+            <th>lastModified</th>
+            <td>{{ f.lastModified }}</td>
+          </tr>
+          <tr>
+            <th>lastModifiedDate</th>
+            <td>{{ f.lastModifiedDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
 
     <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a>
-    <button @click="readFile">readFile</button>
     <hr>
     <pre>{{ output }}</pre>
   </div>
@@ -35,9 +40,8 @@
 <script>
 import VueFullScreenFileDrop from "vue-full-screen-file-drop";
 import "vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css";
-import jsmediatags from 'jsmediatags';
-import getMP3Duration from 'get-mp3-duration';
-import mp3Parser from 'mp3-parser';
+
+import audio from './lib/audio'
 
 /* eslint-disable */
 export default {
@@ -58,38 +62,9 @@ export default {
       console.log("---------------");
       Object.keys(files).forEach(x => {
         this.files.push(files[x]);
+        const a = new audio(files[x]);
+        a.extract();
       });
-    },
-    readFile() {
-      var file = this.files[0];
-      var reader = new FileReader();
-      reader.addEventListener(
-        "load",
-        () => {
-          this.onFileLoad(reader);
-        },
-        false
-      );
-      reader.readAsArrayBuffer(file);
-    },
-    onFileLoad(reader) {
-      var data = reader.result;
-      var buf = new Buffer(data);
-      jsmediatags.read(buf, {
-        onSuccess: function(tag) {
-          console.log(tag);
-          this.output = JSON.stringify(tag, null, 2);
-        },
-        onError: function(error) {
-          console.log(':(', error.type, error.info);
-        }
-      });
-      const duration = getMP3Duration(buf)
-      console.log("------------------------------")
-      console.log(duration);
-      console.log("------------------------------")
-      var mp3Tags = mp3Parser.readTags(new DataView(reader.result));
-      console.log(mp3Tags);
     },
     handleDownload() {
       var file = this.files[0];
