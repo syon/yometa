@@ -4,36 +4,37 @@
       <div>Some custom content</div>
     </VueFullScreenFileDrop>
 
-    <template v-for="(f, i) in files">
-      <table :key="i">
-        <tbody>
-          <tr>
-            <th>name</th>
-            <td>{{ f.name }}</td>
-          </tr>
-          <tr>
-            <th>size</th>
-            <td>{{ f.size }}</td>
-          </tr>
-          <tr>
-            <th>type</th>
-            <td>{{ f.type }}</td>
-          </tr>
-          <tr>
-            <th>lastModified</th>
-            <td>{{ f.lastModified }}</td>
-          </tr>
-          <tr>
-            <th>lastModifiedDate</th>
-            <td>{{ f.lastModifiedDate }}</td>
-          </tr>
-        </tbody>
-      </table>
+    <template v-for="(f, i) in audios">
+      <div :key="i">
+        <table>
+          <tbody>
+            <tr>
+              <th>name</th>
+              <td>{{ f.file.name }}</td>
+            </tr>
+            <tr>
+              <th>size</th>
+              <td>{{ f.file.size }}</td>
+            </tr>
+            <tr>
+              <th>type</th>
+              <td>{{ f.file.type }}</td>
+            </tr>
+            <tr>
+              <th>lastModified</th>
+              <td>{{ f.file.lastModified }}</td>
+            </tr>
+            <tr>
+              <th>lastModifiedDate</th>
+              <td>{{ f.file.lastModifiedDate }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+      </div>
     </template>
 
     <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a>
-    <hr>
-    <pre>{{ output }}</pre>
   </div>
 </template>
 
@@ -52,7 +53,7 @@ export default {
   data: function() {
     return {
       files: [],
-      output: ""
+      audios: [],
     };
   },
   methods: {
@@ -64,6 +65,7 @@ export default {
         this.files.push(files[x]);
         const a = new audio(files[x]);
         a.extract();
+        this.audios.push(a.info);
       });
     },
     handleDownload() {
