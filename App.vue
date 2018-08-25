@@ -64,6 +64,15 @@
                 <td>{{ a.tag.version }}</td>
               </tr>
               <tr>
+                <th>artwork</th>
+                <td>
+                  <span v-if="a.tag.tags.APIC.data.format">
+                    <img :src="getImageUrl(a.tag.tags.APIC)">
+                    <span>{{ a.tag.tags.APIC.data.format }}</span>
+                  </span>
+                </td>
+              </tr>
+              <tr>
                 <th>title</th>
                 <td>{{ a.tag.tags.title }}</td>
               </tr>
@@ -141,7 +150,7 @@
 import VueFullScreenFileDrop from "vue-full-screen-file-drop";
 import "vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css";
 
-import audio from './lib/audio'
+import audio from "./lib/audio";
 
 /* eslint-disable */
 export default {
@@ -152,7 +161,7 @@ export default {
   data: function() {
     return {
       files: [],
-      audios: [],
+      audios: []
     };
   },
   methods: {
@@ -172,6 +181,15 @@ export default {
       var elem = document.getElementById("download");
       elem.download = file.name;
       elem.href = window.URL.createObjectURL(file);
+    },
+    getImageUrl(apic) {
+      if (!apic) return null;
+      var bytes = new Uint8Array(apic.data.data);
+      var binaryData = "";
+      for (var i = 0, len = bytes.byteLength; i < len; i++) {
+        binaryData += String.fromCharCode(bytes[i]);
+      }
+      return `data:${apic.data.format};base64,${window.btoa(binaryData)}`;
     }
   }
 };
