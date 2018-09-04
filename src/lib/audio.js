@@ -23,11 +23,15 @@ export default class Audio {
   }
 
   extract() {
-    return new Promise((rv) => {
+    return new Promise(rv => {
       this.reader = new FileReader();
-      this.reader.addEventListener("load", this.onFileLoad.bind(this, rv), false);
+      this.reader.addEventListener(
+        "load",
+        this.onFileLoad.bind(this, rv),
+        false
+      );
       this.reader.readAsArrayBuffer(this.fileBuffer);
-    })
+    });
   }
 
   onFileLoad(rv) {
