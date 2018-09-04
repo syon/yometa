@@ -125,6 +125,12 @@
             <span v-if="a.tag.tags.TSSE">{{ a.tag.tags.TSSE.data }}</span>
           </td>
         </tr>
+        <tr>
+          <th>JSON</th>
+          <td>
+            <pre style="height:100px;overflow:auto;">{{ JSON.stringify(a, null, 2) }}</pre>
+          </td>
+        </tr>
       </template>
     </tbody>
   </table>
