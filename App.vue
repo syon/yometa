@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <p v-if="files.length === 0">Drop MP3 file here.</p>
+
     <VueFullScreenFileDrop @drop="onDrop">
       <div>Some custom content</div>
     </VueFullScreenFileDrop>
@@ -11,7 +13,7 @@
       </div>
     </template>
 
-    <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a>
+    <!-- <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a> -->
   </div>
 </template>
 
@@ -45,12 +47,12 @@ export default {
         });
       });
     },
-    handleDownload() {
-      var file = this.files[0];
-      var elem = document.getElementById("download");
-      elem.download = file.name;
-      elem.href = window.URL.createObjectURL(file);
-    },
+    // handleDownload() {
+    //   var file = this.files[0];
+    //   var elem = document.getElementById("download");
+    //   elem.download = file.name;
+    //   elem.href = window.URL.createObjectURL(file);
+    // },
   }
 };
 </script>
