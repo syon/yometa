@@ -12,7 +12,6 @@
     </template>
 
     <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a>
-    <button @click="show">show</button>
   </div>
 </template>
 
@@ -45,9 +44,6 @@ export default {
           this.audios.push(info);
         });
       });
-    },
-    show() {
-      this.audios = this.audios.filter(a => a.ready);
     },
     handleDownload() {
       var file = this.files[0];
