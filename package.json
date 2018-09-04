@@ -8,7 +8,11 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "vue": "^2.5.17"
+    "get-mp3-duration": "^1.0.0",
+    "jsmediatags": "^3.8.1",
+    "mp3-parser": "^0.3.0",
+    "vue": "^2.5.17",
+    "vue-full-screen-file-drop": "^1.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
