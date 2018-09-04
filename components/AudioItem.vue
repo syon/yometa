@@ -1,144 +1,66 @@
 <template>
-  <table>
-    <tbody>
-      <tr>
-        <th>name</th>
-        <td>{{ a.file.name }}</td>
-      </tr>
-      <tr>
-        <th>size</th>
-        <td>{{ a.file.size }}</td>
-      </tr>
-      <tr>
-        <th>type</th>
-        <td>{{ a.file.type }}</td>
-      </tr>
-      <tr>
-        <th>lastModified</th>
-        <td>{{ a.file.lastModified }}</td>
-      </tr>
-      <tr>
-        <th>lastModifiedDate</th>
-        <td>{{ a.file.lastModifiedDate }}</td>
-      </tr>
-      <tr>
-        <th>duration</th>
-        <td>{{ a.duration }}</td>
-      </tr>
-      <template v-if="a.header">
-        <tr>
-          <th>bitrate</th>
-          <td>{{ a.header.bitrate }}</td>
-        </tr>
-        <tr>
-          <th>samplingRate</th>
-          <td>{{ a.header.samplingRate }}</td>
-        </tr>
-        <tr>
-          <th>channelMode</th>
-          <td>{{ a.header.channelMode }}</td>
-        </tr>
-        <tr>
-          <th>mpegAudioVersion</th>
-          <td>{{ a.header.mpegAudioVersion }}</td>
-        </tr>
-        <tr>
-          <th>layerDescription</th>
-          <td>{{ a.header.layerDescription }}</td>
-        </tr>
-      </template>
-      <template v-if="a.tag">
-        <tr>
-          <th>type</th>
-          <td>{{ a.tag.type }}</td>
-        </tr>
-        <tr>
-          <th>version</th>
-          <td>{{ a.tag.version }}</td>
-        </tr>
-        <tr>
-          <th>artwork</th>
-          <td>
-            <img :src="getImageUrl(a)">
-            <span>{{ getImageFormat(a) }}</span>
-          </td>
-        </tr>
-        <tr>
-          <th>title</th>
-          <td>{{ a.tag.tags.title }}</td>
-        </tr>
-        <tr>
-          <th>album</th>
-          <td>{{ a.tag.tags.album }}</td>
-        </tr>
-        <tr>
-          <th>genre</th>
-          <td>{{ a.tag.tags.genre }}</td>
-        </tr>
-        <tr>
-          <th>artist</th>
-          <td>{{ a.tag.tags.artist }}</td>
-        </tr>
-        <tr>
-          <th>track</th>
-          <td>{{ a.tag.tags.track }}</td>
-        </tr>
-        <tr>
-          <th>TPOS</th>
-          <td>
-            <span v-if="a.tag.tags.TPOS">{{ a.tag.tags.TPOS.data }}</span>
-          </td>
-        </tr>
-        <tr>
-          <th>TPE2</th>
-          <td>
-            <span v-if="a.tag.tags.TPE2">{{ a.tag.tags.TPE2.data }}</span>
-          </td>
-        </tr>
-        <tr>
-          <th>TDRC</th>
-          <td>
-            <span v-if="a.tag.tags.TDRC">{{ a.tag.tags.TDRC.data }}</span>
-          </td>
-        </tr>
-        <tr>
-          <th>TCOM</th>
-          <td>
-            <span v-if="a.tag.tags.TCOM">{{ a.tag.tags.TCOM.data }}</span>
-          </td>
-        </tr>
-        <tr>
-          <th>TBPM</th>
-          <td>
-            <span v-if="a.tag.tags.TBPM">{{ a.tag.tags.TBPM.data }}</span>
-          </td>
-        </tr>
-        <tr>
-          <th>GRP1</th>
-          <td>
-            <span v-if="a.tag.tags.GRP1">{{ a.tag.tags.GRP1.data }}</span>
-          </td>
-        </tr>
-        <tr>
-          <th>TSSE</th>
-          <td>
-            <span v-if="a.tag.tags.TSSE">{{ a.tag.tags.TSSE.data }}</span>
-          </td>
-        </tr>
-        <tr>
-          <th>JSON</th>
-          <td>
-            <pre style="height:100px;overflow:auto;">{{ JSON.stringify(a, null, 2) }}</pre>
-          </td>
-        </tr>
-      </template>
-    </tbody>
-  </table>
+  <div class="audio">
+    <div class="audio-left">
+      <img :src="getImageUrl(a)">
+      <span>{{ getImageFormat(a) }}</span>
+      <pre style="height:100px;overflow:auto;">{{ JSON.stringify(a, null, 2) }}</pre>
+    </div>
+    <div class="audio-right">
+      <div class="audio-meta">
+        <section>
+          <div class="cellgroup">
+            <attr-cell label="name" :val="a.file.name"></attr-cell>
+            <attr-cell label="size" :val="a.file.size"></attr-cell>
+            <attr-cell label="type" :val="a.file.type"></attr-cell>
+            <attr-cell label="lastModified" :val="a.file.lastModified"></attr-cell>
+            <attr-cell label="lastModifiedDate" :val="a.file.lastModifiedDate"></attr-cell>
+          </div>
+        </section>
+        <section>
+          <div class="cellgroup">
+            <attr-cell label="duration" :val="a.duration"></attr-cell>
+            <template v-if="a.header">
+              <attr-cell label="bitrate" :val="a.header.bitrate"></attr-cell>
+              <attr-cell label="samplingRate" :val="a.header.samplingRate"></attr-cell>
+              <attr-cell label="channelMode" :val="a.header.channelMode"></attr-cell>
+              <attr-cell label="mpegAudioVersion" :val="a.header.mpegAudioVersion"></attr-cell>
+              <attr-cell label="layerDescription" :val="a.header.layerDescription"></attr-cell>
+            </template>
+          </div>
+        </section>
+      </div>
+      <div class="audio-tags">
+        <div class="cellgroup">
+          <template v-if="a.tag">
+            <attr-cell label="type" :val="a.tag.type"></attr-cell>
+            <attr-cell label="version" :val="a.tag.version"></attr-cell>
+            <attr-cell label="title" :val="a.tag.tags.title"></attr-cell>
+            <attr-cell label="album" :val="a.tag.tags.album"></attr-cell>
+            <attr-cell label="genre" :val="a.tag.tags.genre"></attr-cell>
+            <attr-cell label="artist" :val="a.tag.tags.artist"></attr-cell>
+            <attr-cell label="track" :val="a.tag.tags.track"></attr-cell>
+            <attr-cell label="TPOS" :val="a.tag.tags.TPOS.data" v-if="a.tag.tags.TPOS"></attr-cell>
+            <attr-cell label="TPE2" :val="a.tag.tags.TPE2.data" v-if="a.tag.tags.TPE2"></attr-cell>
+            <attr-cell label="TDRC" :val="a.tag.tags.TDRC.data" v-if="a.tag.tags.TDRC"></attr-cell>
+            <attr-cell label="TCOM" :val="a.tag.tags.TCOM.data" v-if="a.tag.tags.TCOM"></attr-cell>
+            <attr-cell label="TBPM" :val="a.tag.tags.TBPM.data" v-if="a.tag.tags.TBPM"></attr-cell>
+            <attr-cell label="GRP1" :val="a.tag.tags.GRP1.data" v-if="a.tag.tags.GRP1"></attr-cell>
+            <attr-cell label="TSSE" :val="a.tag.tags.TSSE.data" v-if="a.tag.tags.TSSE"></attr-cell>
+          </template>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import AttrCell from "./AttrCell"
+
 export default {
   props: ["item"],
+  components: {
+    AttrCell,
+  },
   computed: {
     a() {
       return this.item;
@@ -162,3 +84,32 @@ export default {
   }
 };
 </script>
+
+<style>
+.audio {
+  display: flex;
+}
+.audio-left {
+  width: 250px;
+}
+.audio-right {
+  flex: 1;
+  display: flex;
+}
+.cellgroup {
+  display: flex;
+  flex-direction: column;
+}
+.attrcell {
+  display: flex;
+}
+.attrcell .cell-label {
+  width: 150px;
+  font-size: 14px;
+  text-align: right;
+}
+.attrcell .cell-val {
+  max-width: 300px;
+  font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
+}
+</style>
