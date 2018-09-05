@@ -11,6 +11,16 @@ export default new Vuex.Store({
   state: {
     items: {}
   },
+  getters: {
+    gListData(state) {
+      const list = [];
+      Object.keys(state.items).forEach(x => {
+        const m = state.items[x];
+        list.push(m);
+      });
+      return list;
+    }
+  },
   mutations: {
     addItem(state, payload) {
       dg("mutations::addItem", payload);

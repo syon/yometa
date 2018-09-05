@@ -6,6 +6,16 @@ import mp3Parser from "mp3-parser";
 const dg = debug("audio");
 
 export default class Audio {
+  static columns = [
+    { field: "file.name", label: "file name" },
+    { field: "file.size", label: "file size" },
+    { field: "file.type", label: "file type" },
+    { field: "file.lastModifiedDate", label: "file lastModifiedDate" },
+    { field: "duration", label: "duration" },
+    { field: "header.bitrate", label: "bitrate" },
+    { field: "header.samplingRate", label: "samplingRate" }
+  ];
+
   constructor(fileBuffer) {
     this.fileBuffer = fileBuffer;
     const file = this.makeFileMeta(fileBuffer);

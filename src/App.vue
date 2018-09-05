@@ -13,6 +13,8 @@
       </div>
     </template>
 
+    <b-table :data="$store.getters.gListData" :columns="columns"></b-table>
+
     <!-- <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a> -->
   </div>
 </template>
@@ -21,6 +23,7 @@
 import VueFullScreenFileDrop from "vue-full-screen-file-drop";
 import "vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css";
 
+import audio from "./lib/audio";
 import AudioItem from "./components/AudioItem";
 
 /* eslint-disable */
@@ -32,7 +35,8 @@ export default {
   },
   data: function() {
     return {
-      audios: []
+      audios: [],
+      columns: audio.columns,
     };
   },
   methods: {
