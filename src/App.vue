@@ -2,18 +2,26 @@
   <div id="app">
     <p v-if="audios.length === 0">Drop MP3 file here.</p>
 
+    <div class="buttons has-addons">
+      <span class="button" :class="modeButtonClass('list')" @click="switchMode('list')">リスト</span>
+      <span class="button" :class="modeButtonClass('detail')" @click="switchMode('detail')">詳細</span>
+    </div>
+
     <VueFullScreenFileDrop @drop="onDrop">
       <div>Some custom content</div>
     </VueFullScreenFileDrop>
 
-    <template v-for="(a, i) in $store.state.items">
-      <div :key="i">
-        <audio-item :item="a"></audio-item>
-        <hr>
-      </div>
+    <template v-if="mode === 'list'">
+      <b-table :data="$store.getters.gListData" :columns="columns"></b-table>
     </template>
-
-    <b-table :data="$store.getters.gListData" :columns="columns"></b-table>
+    <template v-else-if="mode === 'detail'">
+      <template v-for="(a, i) in $store.state.items">
+        <div :key="i">
+          <audio-item :item="a"></audio-item>
+          <hr>
+        </div>
+      </template>
+    </template>
 
     <!-- <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a> -->
   </div>
@@ -35,6 +43,7 @@ export default {
   },
   data: function() {
     return {
+      mode: "list",
       audios: [],
       columns: audio.columns,
     };
@@ -46,6 +55,13 @@ export default {
         this.$store.dispatch("readFile", { file });
       });
     },
+    switchMode(mode) {
+      this.mode = mode;
+    },
+    modeButtonClass(mode) {
+      const bool = this.mode === mode;
+      return { "is-primary": bool, "is-selected": bool };
+    }
     // handleDownload() {
     //   var file = this.files[0];
     //   var elem = document.getElementById("download");
