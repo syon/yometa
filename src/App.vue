@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <p v-if="files.length === 0">Drop MP3 file here.</p>
+    <p v-if="audios.length === 0">Drop MP3 file here.</p>
 
     <VueFullScreenFileDrop @drop="onDrop">
       <div>Some custom content</div>
     </VueFullScreenFileDrop>
 
-    <template v-for="(a, i) in audios">
+    <template v-for="(a, i) in $store.state.items">
       <div :key="i">
         <audio-item :item="a"></audio-item>
         <hr>
@@ -22,7 +22,6 @@ import VueFullScreenFileDrop from "vue-full-screen-file-drop";
 import "vue-full-screen-file-drop/dist/vue-full-screen-file-drop.css";
 
 import AudioItem from "./components/AudioItem";
-import audio from "./lib/audio";
 
 /* eslint-disable */
 export default {
@@ -33,18 +32,14 @@ export default {
   },
   data: function() {
     return {
-      files: [],
       audios: []
     };
   },
   methods: {
     onDrop(formData, files) {
       Object.keys(files).forEach(x => {
-        this.files.push(files[x]);
-        const a = new audio(files[x]);
-        a.extract().then((info) => {
-          this.audios.push(info);
-        });
+        const file = files[x];
+        this.$store.dispatch("readFile", { file });
       });
     },
     // handleDownload() {

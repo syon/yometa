@@ -9,7 +9,7 @@ export default class Audio {
   constructor(fileBuffer) {
     this.fileBuffer = fileBuffer;
     const file = this.makeFileMeta(fileBuffer);
-    this.info = { file: file, ready: false };
+    this.info = { id: file.name, file: file, ready: false };
   }
 
   makeFileMeta(fileBuffer) {
