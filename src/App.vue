@@ -1,27 +1,30 @@
 <template>
-  <div id="app">
-    <p v-if="audios.length === 0">Drop MP3 file here.</p>
-
-    <div class="buttons has-addons">
-      <span class="button" :class="modeButtonClass('list')" @click="switchMode('list')">リスト</span>
-      <span class="button" :class="modeButtonClass('detail')" @click="switchMode('detail')">詳細</span>
+  <div id="app" class="container is-fluid">
+    <div class="notification" v-if="Object.keys($store.state.items).length === 0" style="margin:15px;">
+      <p>Drop MP3 file here.</p>
     </div>
 
     <VueFullScreenFileDrop @drop="onDrop">
       <div>Some custom content</div>
     </VueFullScreenFileDrop>
 
-    <template v-if="mode === 'list'">
-      <b-table :data="$store.getters.gListData" :columns="columns"></b-table>
-    </template>
-    <template v-else-if="mode === 'detail'">
-      <template v-for="(a, i) in $store.state.items">
-        <div :key="i">
-          <audio-item :item="a"></audio-item>
-          <hr>
-        </div>
+    <div v-if="Object.keys($store.state.items).length > 0">
+      <div class="buttons has-addons is-right" style="margin:1em;">
+        <span class="button is-small" :class="modeButtonClass('list')" @click="switchMode('list')">リスト</span>
+        <span class="button is-small" :class="modeButtonClass('detail')" @click="switchMode('detail')">詳細</span>
+      </div>
+      <template v-if="mode === 'list'">
+        <b-table :data="$store.getters.gListData" :columns="columns"></b-table>
       </template>
-    </template>
+      <template v-else-if="mode === 'detail'">
+        <template v-for="(a, i) in $store.state.items">
+          <div :key="i">
+            <audio-item :item="a"></audio-item>
+            <hr>
+          </div>
+        </template>
+      </template>
+    </div>
 
     <!-- <a id="download" href="#" download="theFile.mp3" @click="handleDownload">ダウンロード[0]</a> -->
   </div>
