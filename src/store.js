@@ -16,7 +16,7 @@ export default new Vuex.Store({
       const list = [];
       Object.keys(state.items).forEach(x => {
         const m = state.items[x];
-        list.push(m);
+        list.push(audio.makeListable(m));
       });
       return list;
     }

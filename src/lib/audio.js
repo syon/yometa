@@ -2,18 +2,20 @@ import debug from "debug";
 import jsmediatags from "jsmediatags";
 import getMP3Duration from "get-mp3-duration";
 import mp3Parser from "mp3-parser";
+import moment from "moment";
 
 const dg = debug("audio");
+moment.locale("ja");
 
 export default class Audio {
   static columns = [
-    { field: "file.name", label: "file name" },
-    { field: "file.size", label: "file size" },
-    { field: "file.type", label: "file type" },
-    { field: "file.lastModifiedDate", label: "file lastModifiedDate" },
+    { field: "fileName", label: "file name" },
+    { field: "fileSize", label: "file size" },
+    { field: "fileType", label: "file type" },
+    { field: "fileLastModifiedDate", label: "file lastModifiedDate" },
     { field: "duration", label: "duration" },
-    { field: "header.bitrate", label: "bitrate" },
-    { field: "header.samplingRate", label: "samplingRate" }
+    { field: "bitrate", label: "bitrate" },
+    { field: "samplingRate", label: "samplingRate" }
   ];
 
   constructor(fileBuffer) {
@@ -76,5 +78,18 @@ export default class Audio {
     const mp3Tags = mp3Parser.readTags(new DataView(data));
     const obj = mp3Tags.find(x => x.header.samplingRate);
     return obj.header;
+  }
+
+  static makeListable(x) {
+    return {
+      id: x.id,
+      fileName: x.file.name,
+      fileSize: x.file.size,
+      fileType: x.file.type,
+      fileLastModifiedDate: moment(x.file.lastModifiedDate).format("LLL"),
+      duration: x.duration,
+      bitrate: x.header.bitrate,
+      samplingRate: x.header.samplingRate
+    };
   }
 }
