@@ -10,13 +10,13 @@ moment.locale("ja");
 
 export default class Audio {
   static columns = [
-    { field: "fileName", label: "file name" },
-    { field: "fileSize", label: "file size" },
-    { field: "fileType", label: "file type" },
-    { field: "fileLastModifiedDate", label: "file lastModifiedDate" },
-    { field: "duration", label: "duration" },
-    { field: "bitrate", label: "bitrate" },
-    { field: "samplingRate", label: "samplingRate" }
+    { field: "fileName", label: "ファイル名" },
+    { field: "fileSize", label: "ファイルサイズ" },
+    { field: "fileType", label: "ファイルタイプ" },
+    { field: "fileLastModifiedDate", label: "変更日" },
+    { field: "duration", label: "再生時間" },
+    { field: "bitrate", label: "ビットレート" },
+    { field: "samplingRate", label: "サンプルレート" }
   ];
 
   constructor(fileBuffer) {

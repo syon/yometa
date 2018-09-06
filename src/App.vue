@@ -74,3 +74,9 @@ export default {
   }
 };
 </script>
+
+<style lang="stylus">
+.b-table
+  .table thead th
+    font-size 0.8rem
+</style>
