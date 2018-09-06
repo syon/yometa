@@ -3,6 +3,7 @@ import jsmediatags from "jsmediatags";
 import getMP3Duration from "get-mp3-duration";
 import mp3Parser from "mp3-parser";
 import moment from "moment";
+import numeral from "numeral";
 
 const dg = debug("audio");
 moment.locale("ja");
@@ -84,7 +85,7 @@ export default class Audio {
     return {
       id: x.id,
       fileName: x.file.name,
-      fileSize: x.file.size,
+      fileSize: numeral(x.file.size).format("0.0 b"),
       fileType: x.file.type,
       fileLastModifiedDate: moment(x.file.lastModifiedDate).format("LLL"),
       duration: x.duration,

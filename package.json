@@ -14,6 +14,7 @@
     "jsmediatags": "^3.8.1",
     "moment": "^2.22.2",
     "mp3-parser": "^0.3.0",
+    "numeral": "^2.0.6",
     "vue": "^2.5.17",
     "vue-full-screen-file-drop": "^1.0.0",
     "vuex": "^3.0.1"
