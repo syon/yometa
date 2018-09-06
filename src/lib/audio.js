@@ -88,9 +88,15 @@ export default class Audio {
       fileSize: numeral(x.file.size).format("0.0 b"),
       fileType: x.file.type,
       fileLastModifiedDate: moment(x.file.lastModifiedDate).format("LLL"),
-      duration: x.duration,
+      duration: Audio.millisToMinutesAndSeconds(x.duration),
       bitrate: x.header.bitrate,
-      samplingRate: x.header.samplingRate
+      samplingRate: numeral(x.header.samplingRate).format("0,0")
     };
+  }
+
+  static millisToMinutesAndSeconds(millis) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds = ((millis % 60000) / 1000).toFixed(0);
+    return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   }
 }
